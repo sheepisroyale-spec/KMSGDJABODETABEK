@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KMSGD Jabodetabek - Satu Barisan Ciayumajakuning</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Plus Jakarta Sans & Playfair Display -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        gold: {
+                            50: '#fbf8eb',
+                            100: '#f5edcc',
+                            200: '#ebd999',
+                            300: '#deb95e',
+                            400: '#d4af37', // Brand Gold
+                            500: '#bfa130',
+                            600: '#a38426',
+                            700: '#82651e',
+                            800: '#614816',
+                            900: '#412e0f',
+                        },
+                        dark: {
+                            50: '#a3a3a3',
+                            100: '#737373',
+                            200: '#525252',
+                            300: '#404040',
+                            400: '#1a1a1a',
+                            500: '#121212',
+                            600: '#080808', // Solid Dark
+                            700: '#030303',
+                        }
+                    },
+                    animation: {
+                        'shimmer': 'shimmer 2.5s infinite linear',
+                        'float-slow': 'float 8s ease-in-out infinite',
+                        'float-medium': 'float 5s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'glow': 'glow 3s ease-in-out infinite alternate',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Custom scrollbar matching gold theme */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #030303; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, #d4af37, #82651e); 
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #bfa130; 
+        }
+
+        /* Glassmorphism Classes */
+        .glass-panel {
+            background: rgba(8, 8, 8, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+        }
+        
+        .glass-card {
+            background: rgba(12, 12, 12, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .glass-card:hover {
+            border-color: rgba(212, 175, 55, 0.35);
+            box-shadow: 0 12px 35px -10px rgba(212, 175, 55, 0.15);
+            transform: translateY(-4px);
+        }
+
+        /* Custom Keyframes */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(1deg); }
+        }
+        
+        @keyframes glow {
+            0% { box-shadow: 0 0 10px rgba(212, 175, 55, 0.1); }
+            100% { box-shadow: 0 0 25px rgba(212, 175, 55, 0.3); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        /* Reveal Engine Styles */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-25px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(25px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .shimmer-text {
+            background: linear-gradient(90deg, #d4af37 0%, #fff 50%, #d4af37 100%);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: shimmer 4s infinite linear;
+        }
+
+        /* Interactive Canvas background styling */
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.35;
+        }
+    </style>
+</head>
+<body class="bg-dark-700 text-neutral-200 font-sans overflow-x-hidden">
+
+    <!-- Interactive gold particle canvas background -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Preloader Screen -->
+    <div id="preloader" class="fixed inset-0 z-[100] bg-dark-600 flex flex-col items-center justify-center transition-all duration-700 ease-out">
+        <div class="relative flex flex-col items-center">
+            <!-- Animated Gold Crest Wrapper -->
+            <div class="w-20 h-20 mb-6 relative">
+                <div class="absolute inset-0 border-4 border-gold-400/10 rounded-full"></div>
+                <div class="absolute inset-0 border-4 border-t-gold-400 rounded-full animate-spin"></div>
+                <div class="absolute inset-0 flex items-center justify-center text-gold-400 text-2xl font-extrabold tracking-wider">
+                    K
+                </div>
+            </div>
+            <!-- Dynamic branding statement -->
+            <h2 class="text-white text-lg font-bold tracking-widest uppercase mb-1">KMSGD JABODETABEK</h2>
+            <div class="h-[1px] w-20 bg-gradient-to-r from-transparent via-gold-400 to-transparent mb-2"></div>
+            <p class="text-[10px] text-gold-400 tracking-[0.2em] uppercase font-semibold">Satu Barisan Ciayumajakuning</p>
+        </div>
+    </div>
+
+    <!-- Background glowing orbs for visual depth (subtle) -->
+    <div class="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-gold-400/5 blur-[120px] pointer-events-none z-0"></div>
+    <div class="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-gold-600/5 blur-[120px] pointer-events-none z-0"></div>
+
+    <!-- Navigation -->
+    <header class="fixed top-0 w-full z-40 px-4 md:px-8 pt-4 transition-all duration-500" id="main-header">
+        <nav class="max-w-7xl mx-auto glass-panel rounded-2xl px-6 py-4 flex items-center justify-between shadow-[0_4px_30px_rgba(0,0,0,0.5)] transition-all duration-300">
+            <!-- Logo Brand -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 border-2 border-gold-400 rounded-xl flex items-center justify-center text-gold-400 font-extrabold text-lg shadow-[0_0_12px_rgba(212,175,55,0.25)] transition-all duration-300 group-hover:scale-105 bg-dark-600">
+                    K
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-extrabold text-base tracking-wider text-white group-hover:text-gold-400 transition-colors leading-none">KMSGD</span>
+                    <span class="text-[9px] text-gold-400 font-bold tracking-[0.25em] mt-1 uppercase">Jabodetabek</span>
+                </div>
+            </a>
+
+            <!-- Navigation Links -->
+            <div class="hidden lg:flex items-center gap-8 font-semibold text-xs tracking-wide">
+                <a href="#beranda" class="text-neutral-300 hover:text-gold-400 transition duration-300 relative group py-2">
+                    Beranda
+                    <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-gold-400 transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#warisan" class="text-neutral-300 hover:text-gold-400 transition duration-300 relative group py-2">
+                    Sejarah & Tokoh
+                    <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-gold-400 transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#ciayumajakuning" class="text-neutral-300 hover:text-gold-400 transition duration-300 relative group py-2">
+                    Ciayumajakuning
+                    <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-gold-400 transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#kegiatan-nakhoda" class="text-neutral-300 hover:text-gold-400 transition duration-300 relative group py-2">
+                    Aktivitas & Nakhoda
+                    <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-gold-400 transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#aspirasi-dinding" class="text-neutral-300 hover:text-gold-400 transition duration-300 relative group py-2">
+                    Papan Aspirasi
+                    <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-gold-400 transition-all duration-300 group-hover:w-full"></span>
+                </a>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="hidden lg:flex items-center gap-4">
+                <a href="#kontak" class="text-[10px] tracking-widest text-gold-400 border border-gold-400/30 px-4 py-2.5 rounded-xl hover:bg-gold-400/10 hover:border-gold-400 transition duration-300 font-bold uppercase">
+                    Kontak
+                </a>
+                <a href="https://www.instagram.com/kmsgd_jabodetabek/" target="_blank" class="text-[10px] tracking-widest bg-gold-400 hover:bg-gold-300 text-dark-700 font-bold px-5 py-2.5 rounded-xl shadow-[0_4px_15px_rgba(212,175,55,0.2)] transition duration-300 uppercase flex items-center gap-2">
+                    Instagram <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button id="mobile-toggle" class="lg:hidden w-10 h-10 flex items-center justify-center text-gold-400 glass-card rounded-xl border border-gold-400/20 active:scale-95 transition-all">
+                <i class="fas fa-bars text-lg" id="menu-icon"></i>
+            </button>
+        </nav>
+
+        <!-- Mobile Drawer Menu -->
+        <div id="mobile-drawer" class="hidden absolute top-full left-4 right-4 mt-2 glass-panel rounded-2xl overflow-hidden p-6 shadow-2xl border border-gold-400/20 transition-all duration-300 origin-top scale-95 opacity-0">
+            <div class="flex flex-col gap-4 font-semibold text-neutral-300 text-sm">
+                <a href="#beranda" class="mobile-link py-2 border-b border-white/5 flex items-center justify-between hover:text-gold-400">Beranda <i class="fas fa-chevron-right text-xs"></i></a>
+                <a href="#warisan" class="mobile-link py-2 border-b border-white/5 flex items-center justify-between hover:text-gold-400">Sejarah & Tokoh <i class="fas fa-chevron-right text-xs"></i></a>
+                <a href="#ciayumajakuning" class="mobile-link py-2 border-b border-white/5 flex items-center justify-between hover:text-gold-400">Ciayumajakuning <i class="fas fa-chevron-right text-xs"></i></a>
+                <a href="#kegiatan-nakhoda" class="mobile-link py-2 border-b border-white/5 flex items-center justify-between hover:text-gold-400">Aktivitas & Nakhoda <i class="fas fa-chevron-right text-xs"></i></a>
+                <a href="#aspirasi-dinding" class="mobile-link py-2 border-b border-white/5 flex items-center justify-between hover:text-gold-400">Papan Aspirasi <i class="fas fa-chevron-right text-xs"></i></a>
+                <div class="grid grid-cols-2 gap-4 mt-4">
+                    <a href="#kontak" class="mobile-link text-center border border-gold-400/30 text-gold-400 py-3 rounded-xl hover:bg-gold-400/5 font-bold uppercase text-xs tracking-wider">Kontak</a>
+                    <a href="https://www.instagram.com/kmsgd_jabodetabek/" target="_blank" class="text-center bg-gold-400 text-dark-700 py-3 rounded-xl font-bold uppercase text-xs tracking-wider shadow-lg">Instagram</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="beranda" class="min-h-screen flex items-center pt-28 pb-16 relative overflow-hidden z-10">
+        <!-- Subtle interactive grid layout -->
+        <div class="absolute inset-0 opacity-5 bg-[radial-gradient(#d4af37_1px,transparent_1px)] [background-size:32px_32px] pointer-events-none z-0"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <!-- Left Info Content -->
+            <div class="lg:col-span-7 space-y-8 text-center lg:text-left">
+                <!-- Simple Golden Badge -->
+                <div class="inline-flex items-center gap-2 px-4 py-2 glass-card rounded-full border border-gold-400/20 text-[10px] text-gold-400 tracking-widest font-bold uppercase">
+                    <i class="fas fa-shield-halved text-xs text-gold-400"></i> Organisasi Kemahasiswaan Sejak 1964
+                </div>
+                
+                <!-- Main Header Title -->
+                <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-tight">
+                    Satu Barisan, <br class="hidden sm:inline"/>
+                    <span class="shimmer-text font-serif italic font-normal">Ciayumajakuning</span>
+                </h1>
+                
+                <p class="text-neutral-400 text-base md:text-lg font-light max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                    Keluarga Mahasiswa Sunan Gunung Djati (KMSGD) Jabodetabek merupakan wadah pemersatu intelektual muda asal Cirebon, Indramayu, Majalengka, dan Kuningan yang menempuh studi di daerah Jakarta, Bogor, Depok, Tangerang, dan Bekasi.
+                </p>
+                
+                <!-- CTA buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
+                    <a href="#ciayumajakuning" class="group relative px-8 py-3.5 bg-gradient-to-r from-gold-600 to-gold-400 hover:from-gold-500 hover:to-gold-300 text-dark-700 font-extrabold text-xs tracking-widest rounded-xl shadow-[0_4px_15px_rgba(212,175,55,0.2)] transition-all duration-300 uppercase overflow-hidden text-center">
+                        Jelajahi 4 Penjuru Daerah
+                    </a>
+                    <a href="#kegiatan-nakhoda" class="px-8 py-3.5 glass-card text-gold-400 font-extrabold text-xs tracking-widest rounded-xl hover:bg-gold-400/10 hover:text-white transition duration-300 uppercase border border-gold-400/20 text-center flex items-center justify-center gap-2">
+                        Program Kegiatan
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right 3D Interactive Emblem Widget -->
+            <div class="lg:col-span-5 flex justify-center z-10" id="emblem-container">
+                <div class="relative w-72 h-72 sm:w-96 sm:h-96 flex items-center justify-center group pointer-events-auto cursor-grab active:cursor-grabbing" id="emblem-wrapper">
+                    <!-- Glowing Background Circle (subtle) -->
+                    <div class="absolute inset-0 rounded-full bg-gold-400/5 blur-3xl group-hover:bg-gold-400/10 transition-all duration-700 scale-90"></div>
+                    
+                    <!-- Decorative outer rotating rings -->
+                    <div class="absolute w-full h-full border border-dashed border-gold-400/10 rounded-full animate-[spin_100s_linear_infinite] scale-95"></div>
+                    <div class="absolute w-[85%] h-[85%] border border-gold-400/10 rounded-full animate-[spin_60s_linear_infinite_reverse]"></div>
+                    
+                    <!-- Main Golden Floating Shield Card -->
+                    <div class="absolute w-[70%] h-[70%] glass-panel rounded-3xl border border-gold-400/30 flex flex-col items-center justify-center p-8 shadow-[0_0_40px_rgba(212,175,55,0.1)] animate-float-slow bg-gradient-to-b from-dark-500 to-dark-600">
+                        <!-- Glowing Brand icon inside shield -->
+                        <div class="w-20 h-20 rounded-full border-2 border-gold-400/40 flex items-center justify-center text-gold-400 text-4xl font-extrabold mb-4 shadow-[0_0_20px_rgba(212,175,55,0.2)] bg-dark-600">
+                            K
+                        </div>
+                        <div class="text-center">
+                            <p class="text-[9px] tracking-[0.3em] font-extrabold text-gold-400 uppercase">Keluarga Besar</p>
+                            <h3 class="text-xl font-black text-white tracking-widest mt-1">KMSGD</h3>
+                            <span class="text-[10px] text-neutral-400 uppercase font-semibold tracking-wider block mt-0.5">JABODETABEK</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bento Grid Stats Section -->
+    <section class="py-12 relative z-10 px-4 md:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                <!-- Bento Block 1: Tahun Berdiri -->
+                <div class="glass-card p-6 rounded-2xl border border-white/5 flex flex-col justify-between hover:border-gold-400/20 transition-all duration-300">
+                    <div class="w-10 h-10 rounded-lg bg-gold-400/10 flex items-center justify-center text-gold-400 mb-6">
+                        <i class="fas fa-calendar-days text-lg"></i>
+                    </div>
+                    <div>
+                        <div class="text-3xl md:text-4xl font-black tracking-tight text-white mb-2" id="stat-year">0</div>
+                        <p class="text-[10px] md:text-xs text-neutral-400 uppercase tracking-widest font-semibold">Tahun Berdiri</p>
+                    </div>
+                </div>
+
+                <!-- Bento Block 2: Total Wilayah -->
+                <div class="glass-card p-6 rounded-2xl border border-white/5 flex flex-col justify-between hover:border-gold-400/20 transition-all duration-300">
+                    <div class="w-10 h-10 rounded-lg bg-gold-400/10 flex items-center justify-center text-gold-400 mb-6">
+                        <i class="fas fa-map-location-dot text-lg"></i>
+                    </div>
+                    <div>
+                        <div class="text-3xl md:text-4xl font-black tracking-tight text-white mb-2" id="stat-region">0</div>
+                        <p class="text-[10px] md:text-xs text-neutral-400 uppercase tracking-widest font-semibold">Kabupaten / Kota</p>
+                    </div>
+                </div>
+
+                <!-- Bento Block 3: Jumlah Anggota Aktif -->
+                <div class="glass-card p-6 rounded-2xl border border-white/5 flex flex-col justify-between hover:border-gold-400/20 transition-all duration-300">
+                    <div class="w-10 h-10 rounded-lg bg-gold-400/10 flex items-center justify-center text-gold-400 mb-6">
+                        <i class="fas fa-user-group text-lg"></i>
+                    </div>
+                    <div>
+                        <div class="text-3xl md:text-4xl font-black tracking-tight text-white mb-2" id="stat-members">0</div>
+                        <p class="text-[10px] md:text-xs text-neutral-400 uppercase tracking-widest font-semibold">Kader Aktif</p>
+                    </div>
+                </div>
+
+                <!-- Bento Block 4: Jaringan Universitas -->
+                <div class="glass-card p-6 rounded-2xl border border-white/5 flex flex-col justify-between hover:border-gold-400/20 transition-all duration-300">
+                    <div class="w-10 h-10 rounded-lg bg-gold-400/10 flex items-center justify-center text-gold-400 mb-6">
+                        <i class="fas fa-graduation-cap text-lg"></i>
+                    </div>
+                    <div>
+                        <div class="text-3xl md:text-4xl font-black tracking-tight text-white mb-2" id="stat-campus">0</div>
+                        <p class="text-[10px] md:text-xs text-neutral-400 uppercase tracking-widest font-semibold">Kampus Jejaring</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Unified Section: Warisan Sejarah & Tokoh Pembina (Bento Side-by-Side Split) -->
+    <section id="warisan" class="py-24 relative overflow-hidden bg-dark-600 px-4 sm:px-6 lg:px-8 z-10 border-t border-white/5">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <span class="text-gold-400 uppercase text-xs tracking-[0.3em] font-extrabold">Lintas Generasi & Kehormatan</span>
+                <h2 class="text-3xl md:text-5xl font-extrabold text-white mt-2">Warisan Sejarah & <span class="shimmer-text">Tokoh Pembina</span></h2>
+                <p class="text-neutral-400 mt-4 max-w-2xl mx-auto text-sm md:text-base">Mengenal rekam jejak historis berdirinya wadah persaudaraan KMSGD serta bimbingan moril para tokoh nasional alumni daerah.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start max-w-6xl mx-auto">
+                <!-- Left: Sejarah Timeline (Col-span-5) -->
+                <div class="lg:col-span-5 space-y-8">
+                    <div class="border-b border-gold-400/20 pb-4 mb-4">
+                        <h3 class="text-lg font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                            <i class="fas fa-hourglass-half text-gold-400"></i> Lintas Waktu Sejarah
+                        </h3>
+                    </div>
+
+                    <!-- Sleek Timeline Track -->
+                    <div class="relative border-l border-gold-400/20 pl-6 sm:pl-8 space-y-8">
+                        <!-- Timeline Event 1 -->
+                        <div class="relative reveal-left">
+                            <div class="absolute -left-[31px] sm:-left-[39px] top-1.5 w-3 h-3 rounded-full border-2 border-gold-400 bg-dark-600 shadow-[0_0_8px_rgba(212,175,55,0.8)] z-10"></div>
+                            <div class="glass-card p-5 rounded-xl border border-white/5">
+                                <span class="text-gold-400 text-[10px] font-black tracking-widest uppercase bg-gold-400/10 px-2.5 py-0.5 rounded-full">1964</span>
+                                <h4 class="text-sm font-bold text-white mt-2">Deklarasi & Pendirian Awal</h4>
+                                <p class="text-neutral-400 mt-1.5 text-xs leading-relaxed">
+                                    Dipelopori oleh tokoh militer kedaerahan **Umar Wirahadikusumah** (mantan Wakil Presiden RI) bersama **Edi Suparno**, sebagai ikatan kultural mahasiswa Ciayumajakuning di Jakarta untuk saling asuh dan menjaga jati diri daerah.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Timeline Event 2 -->
+                        <div class="relative reveal-left">
+                            <div class="absolute -left-[31px] sm:-left-[39px] top-1.5 w-3 h-3 rounded-full border-2 border-gold-400 bg-dark-600 shadow-[0_0_8px_rgba(212,175,55,0.8)] z-10"></div>
+                            <div class="glass-card p-5 rounded-xl border border-white/5">
+                                <span class="text-gold-400 text-[10px] font-black tracking-widest uppercase bg-gold-400/10 px-2.5 py-0.5 rounded-full">1980s - Sekarang</span>
+                                <h4 class="text-sm font-bold text-white mt-2">Episentrum Swadaya Ciputat</h4>
+                                <p class="text-neutral-400 mt-1.5 text-xs leading-relaxed">
+                                    Didirikannya asrama fisik di Jl. Ir. H. Juanda, Gg. Swadaya No. 79, Pisangan, Ciputat Timur. Menjadi kawah candradimuka pemikiran kritis, kajian kebudayaan, dan penguatan persaudaraan mahasiswa.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Tokoh Alumni & Pembina (Col-span-7) -->
+                <div class="lg:col-span-7 space-y-8">
+                    <div class="border-b border-gold-400/20 pb-4 mb-4">
+                        <h3 class="text-lg font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                            <i class="fas fa-graduation-cap text-gold-400"></i> Dewan Pembina & Sesepuh
+                        </h3>
+                    </div>
+
+                    <!-- Grid Layout for Leaders -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Leader 1: Said Aqil Siradj -->
+                        <div class="glass-card p-6 rounded-2xl flex flex-col justify-between hover:border-gold-400/30 group relative overflow-hidden transition-all duration-300">
+                            <div>
+                                <div class="w-10 h-10 rounded-xl bg-gold-400/10 flex items-center justify-center text-gold-400 text-lg mb-4">
+                                    <i class="fas fa-university"></i>
+                                </div>
+                                <h4 class="text-sm font-extrabold text-white group-hover:text-gold-400 transition-colors leading-snug">Prof. Dr. KH. Said Aqil Siradj, MA.</h4>
+                                <p class="text-gold-400 text-[9px] font-black tracking-widest uppercase mt-1 mb-3">Dewan Kehormatan / Sesepuh</p>
+                                <p class="text-neutral-400 text-xs leading-relaxed">
+                                    Mantan Ketua Umum PBNU asal Cirebon. Secara konsisten membina arah gerak intelektual santri dan spiritualitas kader KMSGD Jabodetabek.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Leader 2: Rokhmin Dahuri -->
+                        <div class="glass-card p-6 rounded-2xl flex flex-col justify-between hover:border-gold-400/30 group relative overflow-hidden transition-all duration-300">
+                            <div>
+                                <div class="w-10 h-10 rounded-xl bg-gold-400/10 flex items-center justify-center text-gold-400 text-lg mb-4">
+                                    <i class="fas fa-anchor"></i>
+                                </div>
+                                <h4 class="text-sm font-extrabold text-white group-hover:text-gold-400 transition-colors leading-snug">Prof. Dr. Ir. Rokhmin Dahuri, MS.</h4>
+                                <p class="text-gold-400 text-[9px] font-black tracking-widest uppercase mt-1 mb-3">Dewan Pembina / Alumni</p>
+                                <p class="text-neutral-400 text-xs leading-relaxed">
+                                    Mantan Menteri Kelautan dan Perikanan RI asal Indramayu. Aktif mendukung program kepemimpinan pemuda dan wirausaha kemaritiman.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Leader 3: Tadjus Sobirin -->
+                        <div class="glass-card p-6 rounded-2xl md:col-span-2 flex flex-col justify-between hover:border-gold-400/30 group relative overflow-hidden transition-all duration-300">
+                            <div class="flex flex-col md:flex-row gap-6 items-start">
+                                <div class="w-10 h-10 rounded-xl bg-gold-400/10 flex items-center justify-center text-gold-400 text-lg flex-shrink-0">
+                                    <i class="fas fa-medal"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-extrabold text-white group-hover:text-gold-400 transition-colors leading-snug">Mayjen TNI (Purn) H. Tadjus Sobirin</h4>
+                                    <p class="text-gold-400 text-[9px] font-black tracking-widest uppercase mt-1 mb-2">Dewan Pembina Legendaris</p>
+                                    <p class="text-neutral-400 text-xs leading-relaxed">
+                                        Mantan Bupati Tangerang dan sesepuh pembina yang secara historis mengawal kelestarian asrama Swadaya Ciputat dan kemandirian fungsional kepengurusan.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Region Showcase (Ciayumajakuning) -->
+    <section id="ciayumajakuning" class="py-24 relative px-4 sm:px-6 lg:px-8 z-10 border-t border-white/5">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <span class="text-gold-400 uppercase text-xs tracking-[0.3em] font-extrabold">Pesona 4 Penjuru Kedaerahan</span>
+                <h2 class="text-3xl md:text-5xl font-extrabold text-white mt-2">Sinergi <span class="shimmer-text">Ciayumajakuning</span></h2>
+                <p class="text-neutral-400 mt-4 max-w-xl mx-auto text-sm md:text-base">Masing-masing kabupaten mengirimkan kader terbaiknya dengan kekayaan sejarah, adat istiadat, dan potensi yang saling melengkapi.</p>
+            </div>
+
+            <!-- Horizontal Tab Switcher Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10 max-w-4xl mx-auto reveal">
+                <!-- Tab Cirebon -->
+                <button onclick="switchRegion('cirebon')" id="tab-cirebon" class="region-tab active p-4 rounded-xl font-bold tracking-wider text-xs transition duration-300 flex flex-col items-center gap-2 border bg-gold-400 text-dark-700 border-gold-400 shadow-lg">
+                    <i class="fas fa-gopuram text-base"></i> Cirebon
+                </button>
+                <!-- Tab Indramayu -->
+                <button onclick="switchRegion('indramayu')" id="tab-indramayu" class="region-tab p-4 rounded-xl font-bold tracking-wider text-xs transition duration-300 flex flex-col items-center gap-2 border bg-white/5 text-neutral-300 border-white/5 hover:border-gold-400/30">
+                    <i class="fas fa-ship text-base"></i> Indramayu
+                </button>
+                <!-- Tab Majalengka -->
+                <button onclick="switchRegion('majalengka')" id="tab-majalengka" class="region-tab p-4 rounded-xl font-bold tracking-wider text-xs transition duration-300 flex flex-col items-center gap-2 border bg-white/5 text-neutral-300 border-white/5 hover:border-gold-400/30">
+                    <i class="fas fa-mountain-sun text-base"></i> Majalengka
+                </button>
+                <!-- Tab Kuningan -->
+                <button onclick="switchRegion('kuningan')" id="tab-kuningan" class="region-tab p-4 rounded-xl font-bold tracking-wider text-xs transition duration-300 flex flex-col items-center gap-2 border bg-white/5 text-neutral-300 border-white/5 hover:border-gold-400/30">
+                    <i class="fas fa-tree text-base"></i> Kuningan
+                </button>
+            </div>
+
+            <!-- Dynamic Card Panel Area -->
+            <div class="glass-panel p-6 md:p-10 rounded-3xl max-w-5xl mx-auto border border-gold-400/20 shadow-2xl relative overflow-hidden transition-all duration-500 min-h-[360px] flex items-center" id="region-card-container">
+                <!-- Inner Layout wrapper (changed dynamically via script) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center w-full" id="region-content">
+                    <!-- Left text info -->
+                    <div class="space-y-6">
+                        <div class="inline-block px-3 py-1 bg-gold-400/10 border border-gold-400/30 rounded-full text-gold-400 text-[10px] font-bold uppercase tracking-wider">
+                            Pusat Adat & Keraton Nusantara
+                        </div>
+                        <h3 class="text-2xl md:text-3xl font-extrabold text-white">Cirebon</h3>
+                        <p class="text-neutral-400 leading-relaxed text-xs md:text-sm">
+                            Menghadirkan corak spiritual bernilai tinggi warisan Sunan Gunung Djati. Keraton Kasepuhan, seni tari Topeng, batik Megamendung, serta kontribusi basis santri intelektual tangguh dalam barisan perjuangan KMSGD.
+                        </p>
+                        <div class="flex gap-6 pt-2">
+                            <div>
+                                <h4 class="text-[10px] text-neutral-500 uppercase font-extrabold tracking-widest">Khas Seni</h4>
+                                <p class="text-white text-xs font-semibold mt-1">Sintren & Tarling Klasik</p>
+                            </div>
+                            <div>
+                                <h4 class="text-[10px] text-neutral-500 uppercase font-extrabold tracking-widest">Semboyan</h4>
+                                <p class="text-white text-xs font-semibold mt-1">Gemah Ripah Loh Jinawi</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Right image -->
+                    <div class="relative overflow-hidden rounded-2xl aspect-[4/3] border border-white/10 shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1544928147-79a2dbc1f389?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Cirebon" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Unified Section: Derap Langkah & Struktur Nakhoda (Aktivitas + BPH) -->
+    <section id="kegiatan-nakhoda" class="py-24 relative bg-dark-600 px-4 sm:px-6 lg:px-8 overflow-hidden border-t border-white/5 z-10">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <span class="text-gold-400 uppercase text-xs tracking-[0.3em] font-extrabold">Badan Pengurus Harian & Pergerakan</span>
+                <h2 class="text-3xl md:text-5xl font-extrabold text-white mt-2">Derap Langkah & <span class="shimmer-text">Nakhoda BPH</span></h2>
+                <p class="text-neutral-400 mt-4 max-w-2xl mx-auto text-sm md:text-base">Mengenal struktur fungsional kepengurusan BPH Periode 2024 - 2026 bersama dengan rangkuman agenda aktivitas riil yang telah terlaksana.</p>
+            </div>
+
+            <!-- BPH Section Header Inside Unified Layout -->
+            <div class="border-b border-gold-400/20 pb-4 mb-10 max-w-6xl mx-auto">
+                <h3 class="text-base font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                    <i class="fas fa-compass text-gold-400"></i> Struktur Kepengurusan BPH 2024 - 2026
+                </h3>
+            </div>
+
+            <!-- BPH Cards Layout -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mb-20">
+                <!-- President Card: Hamzah Hafid -->
+                <div class="glass-card p-6 rounded-2xl flex flex-col items-center text-center group border border-white/5 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-b from-gold-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+                    <div class="w-20 h-20 rounded-full border-2 border-gold-400 p-1 mb-4 shadow-[0_0_12px_rgba(212,175,55,0.15)] group-hover:shadow-[0_0_20px_rgba(212,175,55,0.3)] transition-all duration-300">
+                        <img src="https://ui-avatars.com/api/?name=Hamzah+Hafid&background=D4AF37&color=000&size=150" alt="Ketua Umum" class="w-full h-full rounded-full object-cover">
+                    </div>
+                    <h4 class="text-sm font-extrabold text-white group-hover:text-gold-400 transition-colors duration-300">Hamzah Hafid</h4>
+                    <p class="text-gold-400 text-[9px] font-black tracking-widest uppercase mt-1 mb-3">Ketua Umum</p>
+                    <div class="h-[1px] w-8 bg-neutral-700 mb-3"></div>
+                    <p class="text-neutral-500 text-[10px] font-semibold">UIN Syarif Hidayatullah Jakarta</p>
+                </div>
+
+                <!-- Secretary Card -->
+                <div class="glass-card p-6 rounded-2xl flex flex-col items-center text-center group border border-white/5 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-b from-gold-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+                    <div class="w-20 h-20 rounded-full border-2 border-gold-400 p-1 mb-4 shadow-[0_0_12px_rgba(212,175,55,0.15)] group-hover:shadow-[0_0_20px_rgba(212,175,55,0.3)] transition-all duration-300">
+                        <img src="https://ui-avatars.com/api/?name=Ilyas+Najib&background=333&color=D4AF37&size=150" alt="Sekretaris Umum" class="w-full h-full rounded-full object-cover">
+                    </div>
+                    <h4 class="text-sm font-extrabold text-white group-hover:text-gold-400 transition-colors duration-300">Ilyas Najib Ahmad</h4>
+                    <p class="text-gold-400 text-[9px] font-black tracking-widest uppercase mt-1 mb-3">Sekretaris Umum</p>
+                    <div class="h-[1px] w-8 bg-neutral-700 mb-3"></div>
+                    <p class="text-neutral-500 text-[10px] font-semibold">Universitas Indonesia</p>
+                </div>
+
+                <!-- Treasurer Card -->
+                <div class="glass-card p-6 rounded-2xl flex flex-col items-center text-center group border border-white/5 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-b from-gold-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+                    <div class="w-20 h-20 rounded-full border-2 border-gold-400 p-1 mb-4 shadow-[0_0_12px_rgba(212,175,55,0.15)] group-hover:shadow-[0_0_20px_rgba(212,175,55,0.3)] transition-all duration-300">
+                        <img src="https://ui-avatars.com/api/?name=Anya+Safira&background=D4AF37&color=000&size=150" alt="Bendahara Umum" class="w-full h-full rounded-full object-cover">
+                    </div>
+                    <h4 class="text-sm font-extrabold text-white group-hover:text-gold-400 transition-colors duration-300">Anya Safira</h4>
+                    <p class="text-gold-400 text-[9px] font-black tracking-widest uppercase mt-1 mb-3">Bendahara I</p>
+                    <div class="h-[1px] w-8 bg-neutral-700 mb-3"></div>
+                    <p class="text-neutral-500 text-[10px] font-semibold">UIN Syarif Hidayatullah Jakarta</p>
+                </div>
+
+                <!-- Co-Treasurer Card -->
+                <div class="glass-card p-6 rounded-2xl flex flex-col items-center text-center group border border-white/5 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-b from-gold-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+                    <div class="w-20 h-20 rounded-full border-2 border-gold-400 p-1 mb-4 shadow-[0_0_12px_rgba(212,175,55,0.15)] group-hover:shadow-[0_0_20px_rgba(212,175,55,0.3)] transition-all duration-300">
+                        <img src="https://ui-avatars.com/api/?name=Luthfi+Farhan&background=333&color=D4AF37&size=150" alt="Bendahara II" class="w-full h-full rounded-full object-cover">
+                    </div>
+                    <h4 class="text-sm font-extrabold text-white group-hover:text-gold-400 transition-colors duration-300">Luthfi Farhan</h4>
+                    <p class="text-gold-400 text-[9px] font-black tracking-widest uppercase mt-1 mb-3">Bendahara II</p>
+                    <div class="h-[1px] w-8 bg-neutral-700 mb-3"></div>
+                    <p class="text-neutral-500 text-[10px] font-semibold">Universitas Negeri Jakarta</p>
+                </div>
+            </div>
+
+            <!-- Kegiatan Section Header -->
+            <div class="border-b border-gold-400/20 pb-4 mb-10 max-w-6xl mx-auto">
+                <h3 class="text-base font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                    <i class="fas fa-cubes text-gold-400"></i> Laporan Kegiatan & Dokumentasi Riil
+                </h3>
+            </div>
+
+            <!-- News Grid Structure (Real Activities from Instagram/Press) -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
+                <!-- Activity Card 1 -->
+                <div class="glass-card rounded-2xl overflow-hidden flex flex-col group h-full">
+                    <div class="relative overflow-hidden aspect-video border-b border-white/5">
+                        <img src="https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="PETA" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-102">
+                        <div class="absolute top-4 left-4 px-3 py-1 bg-gold-400 text-dark-700 font-bold text-[9px] tracking-wider uppercase rounded-md shadow-md">
+                            Kaderisasi Utama
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col justify-between flex-grow">
+                        <div>
+                            <span class="text-neutral-500 text-[10px] font-bold uppercase tracking-wide"><i class="far fa-calendar-alt mr-1"></i> Agenda Tahunan</span>
+                            <h3 class="text-lg font-bold text-white mt-2 group-hover:text-gold-400 transition-colors duration-300 leading-snug">Pekan Ta'aruf (PETA) KMSGD Jabodetabek</h3>
+                            <p class="text-neutral-400 mt-2 text-xs line-clamp-3">
+                                Langkah awal menyambut kader mahasiswa baru asal Cirebon, Indramayu, Majalengka, dan Kuningan yang baru menjejaki dunia perkuliahan di Jabodetabek.
+                            </p>
+                        </div>
+                        <div class="pt-6 border-t border-white/5 mt-6 flex items-center justify-between">
+                            <button onclick="openModal('peta')" class="text-gold-400 text-[10px] font-bold tracking-widest uppercase hover:text-white transition duration-300 flex items-center gap-2">
+                                Baca Detail <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity Card 2 -->
+                <div class="glass-card rounded-2xl overflow-hidden flex flex-col group h-full">
+                    <div class="relative overflow-hidden aspect-video border-b border-white/5">
+                        <img src="https://images.unsplash.com/photo-1529156069898-49953eb1b5ce?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Festival Budaya" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-102">
+                        <div class="absolute top-4 left-4 px-3 py-1 bg-gold-400 text-dark-700 font-bold text-[9px] tracking-wider uppercase rounded-md shadow-md">
+                            Kebudayaan
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col justify-between flex-grow">
+                        <div>
+                            <span class="text-neutral-500 text-[10px] font-bold uppercase tracking-wide"><i class="far fa-calendar-alt mr-1"></i> Pentas Kultural</span>
+                            <h3 class="text-lg font-bold text-white mt-2 group-hover:text-gold-400 transition-colors duration-300 leading-snug">Festival Budaya Nusantara (TMII)</h3>
+                            <p class="text-neutral-400 mt-2 text-xs line-clamp-3">
+                                Pagelaran budaya berkala bertempat di Anjungan Jawa Barat Taman Mini Indonesia Indah (TMII), menampilkan tarian khas daerah dan orasi kebudayaan nasional.
+                            </p>
+                        </div>
+                        <div class="pt-6 border-t border-white/5 mt-6 flex items-center justify-between">
+                            <button onclick="openModal('festival')" class="text-gold-400 text-[10px] font-bold tracking-widest uppercase hover:text-white transition duration-300 flex items-center gap-2">
+                                Baca Detail <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity Card 3 -->
+                <div class="glass-card rounded-2xl overflow-hidden flex flex-col group h-full">
+                    <div class="relative overflow-hidden aspect-video border-b border-white/5">
+                        <img src="https://images.unsplash.com/photo-1544531586-fde5298cda41?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="KMSGD Mengabdi" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-102">
+                        <div class="absolute top-4 left-4 px-3 py-1 bg-gold-400 text-dark-700 font-bold text-[9px] tracking-wider uppercase rounded-md shadow-md">
+                            Pengabdian Sosial
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col justify-between flex-grow">
+                        <div>
+                            <span class="text-neutral-500 text-[10px] font-bold uppercase tracking-wide"><i class="far fa-calendar-alt mr-1"></i> Bakti Sosial</span>
+                            <h3 class="text-lg font-bold text-white mt-2 group-hover:text-gold-400 transition-colors duration-300 leading-snug">Bakti Sosial & Penanaman Pohon</h3>
+                            <p class="text-neutral-400 mt-2 text-xs line-clamp-3">
+                                Kolaborasi nyata antara KMSGD Jabodetabek dengan BKPRMI Kabupaten Cirebon melakukan penanaman bibit pohon jambu bersama di kawasan Desa Matangaji.
+                            </p>
+                        </div>
+                        <div class="pt-6 border-t border-white/5 mt-6 flex items-center justify-between">
+                            <button onclick="openModal('mengabdi')" class="text-gold-400 text-[10px] font-bold tracking-widest uppercase hover:text-white transition duration-300 flex items-center gap-2">
+                                Baca Detail <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Unified Section: Papan Aspirasi KMSGD -->
+    <section id="aspirasi-dinding" class="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden z-10 border-t border-white/5">
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="text-center mb-16 reveal">
+                <span class="text-gold-400 uppercase text-xs tracking-[0.3em] font-extrabold">Dinding Interaktif KMSGD</span>
+                <h2 class="text-3xl md:text-5xl font-extrabold text-white mt-2">Papan Suara <span class="shimmer-text">Keluarga KMSGD</span></h2>
+                <p class="text-neutral-400 mt-4 max-w-xl mx-auto text-sm md:text-base">Kader atau alumni bisa langsung menempelkan harapan, masukan, maupun kata-kata penyemangat di bawah ini secara instan.</p>
+            </div>
+
+            <!-- Grid Layout -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 max-w-6xl mx-auto items-stretch">
+                <!-- Left Input Panel -->
+                <div class="lg:col-span-5 glass-panel p-8 rounded-3xl border border-gold-400/20 flex flex-col justify-between h-full">
+                    <form onsubmit="handlePostAspiration(event)" class="space-y-6">
+                        <div>
+                            <label class="block text-[10px] font-black text-gold-400 uppercase tracking-widest mb-2" for="asp-name">Nama / Inisial</label>
+                            <input type="text" id="asp-name" required class="w-full bg-dark-700/80 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-gold-400/50 transition-all" placeholder="Contoh: Kang Fiqih">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-black text-gold-400 uppercase tracking-widest mb-2" for="asp-origin">Asal Daerah</label>
+                            <select id="asp-origin" required class="w-full bg-dark-700/80 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-gold-400/50 transition-all">
+                                <option value="Cirebon">Cirebon</option>
+                                <option value="Indramayu">Indramayu</option>
+                                <option value="Majalengka">Majalengka</option>
+                                <option value="Kuningan">Kuningan</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-black text-gold-400 uppercase tracking-widest mb-2" for="asp-text">Aspirasi / Kata Penyemangat</label>
+                            <textarea id="asp-text" required rows="4" maxlength="150" class="w-full bg-dark-700/80 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-gold-400/50 transition-all resize-none" placeholder="Tulis harapan Anda untuk KMSGD ke depannya..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full py-3.5 bg-gold-400 hover:bg-gold-300 text-dark-700 font-extrabold text-xs tracking-widest rounded-xl transition duration-300 shadow-[0_4px_10px_rgba(212,175,55,0.25)] uppercase flex items-center justify-center gap-2">
+                            Kirim Ke Papan <i class="fas fa-sticky-note"></i>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Right Wall Visual Board -->
+                <div class="lg:col-span-7 glass-card rounded-3xl p-6 border border-white/5 bg-dark-600 relative overflow-hidden flex flex-col justify-between min-h-[400px]">
+                    <div class="absolute inset-0 opacity-[0.02] pointer-events-none bg-[radial-gradient(#d4af37_1px,transparent_1px)] [background-size:12px_12px]"></div>
+                    
+                    <div id="aspiration-wall-container" class="grid grid-cols-1 md:grid-cols-2 gap-4 h-full relative z-10 overflow-y-auto max-h-[420px] p-2">
+                        <!-- Prepopulated Real Aspirations -->
+                        <div class="glass-panel p-5 rounded-2xl border-l-4 border-l-gold-400 border-white/5 flex flex-col justify-between">
+                            <p class="text-neutral-300 text-xs leading-relaxed italic">"Asrama Swadaya 79 Ciputat selalu menjadi rumah ternyaman dan terhangat di kala lelah mengarungi dinamika perkuliahan."</p>
+                            <div class="mt-4 pt-2.5 border-t border-white/5 flex items-center justify-between text-[10px]">
+                                <span class="font-extrabold text-white">Kang Ade</span>
+                                <span class="text-gold-400 font-bold uppercase">Cirebon</span>
+                            </div>
+                        </div>
+
+                        <div class="glass-panel p-5 rounded-2xl border-l-4 border-l-gold-400 border-white/5 flex flex-col justify-between">
+                            <p class="text-neutral-300 text-xs leading-relaxed italic">"Sukses dan guyub selalu untuk nakhoda BPH 2024-2026. Bawa nama harum Ciayumajakuning ke kancah nasional."</p>
+                            <div class="mt-4 pt-2.5 border-t border-white/5 flex items-center justify-between text-[10px]">
+                                <span class="font-extrabold text-white">Teh Firda</span>
+                                <span class="text-gold-400 font-bold uppercase">Majalengka</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer id="kontak" class="bg-dark-600 text-neutral-400 pt-20 pb-10 border-t border-white/5 relative z-10 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 pb-16 border-b border-white/5">
+                <!-- Branding Col -->
+                <div class="md:col-span-5 space-y-6">
+                    <a href="#" class="flex items-center gap-3">
+                        <div class="w-10 h-10 border-2 border-gold-400 rounded-xl flex items-center justify-center text-gold-400 font-extrabold text-lg shadow-[0_0_12px_rgba(212,175,55,0.15)] bg-dark-600">
+                            K
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-extrabold text-lg tracking-wider text-white leading-none">KMSGD</span>
+                            <span class="text-[9px] text-gold-400 font-bold tracking-[0.25em] mt-1.5 uppercase">Jabodetabek</span>
+                        </div>
+                    </a>
+                    <p class="text-neutral-400 text-xs leading-relaxed max-w-sm">
+                        Keluarga Mahasiswa Sunan Gunung Djati Jabodetabek merupakan wadah primordial kedaerahan yang menghimpun mahasiswa aktif asal Cirebon, Indramayu, Majalengka, dan Kuningan.
+                    </p>
+                    <div class="flex gap-3">
+                        <a href="https://www.instagram.com/kmsgd_jabodetabek/" target="_blank" class="w-9 h-9 rounded-xl glass-card border border-white/10 flex items-center justify-center text-gold-400 hover:bg-gold-400/10 hover:border-gold-400 transition duration-300 text-sm"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="md:col-span-3 space-y-6">
+                    <h4 class="text-white font-extrabold uppercase text-[10px] tracking-widest border-b border-gold-400/40 pb-2 inline-block">Menu Pintasan</h4>
+                    <ul class="space-y-3 font-semibold text-xs">
+                        <li><a href="#beranda" class="hover:text-gold-400 transition duration-200 flex items-center gap-2"><i class="fas fa-chevron-right text-[9px] text-gold-400"></i> Beranda</a></li>
+                        <li><a href="#warisan" class="hover:text-gold-400 transition duration-200 flex items-center gap-2"><i class="fas fa-chevron-right text-[9px] text-gold-400"></i> Sejarah & Tokoh</a></li>
+                        <li><a href="#ciayumajakuning" class="hover:text-gold-400 transition duration-200 flex items-center gap-2"><i class="fas fa-chevron-right text-[9px] text-gold-400"></i> Ciayumajakuning</a></li>
+                        <li><a href="#kegiatan-nakhoda" class="hover:text-gold-400 transition duration-200 flex items-center gap-2"><i class="fas fa-chevron-right text-[9px] text-gold-400"></i> Aktivitas & Nakhoda</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Detail Col -->
+                <div class="md:col-span-4 space-y-6">
+                    <h4 class="text-white font-extrabold uppercase text-[10px] tracking-widest border-b border-gold-400/40 pb-2 inline-block">Sekretariat Resmi</h4>
+                    <ul class="space-y-4 text-xs">
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-map-marker-alt mt-1 text-gold-400 text-sm"></i>
+                            <span class="leading-relaxed">Sekretariat Utama KMSGD,<br/>Jl. Ir. H. Djuanda, Gg. Swadaya No. 79, RT 004 / RW 08, Pisangan, Ciputat Timur, Tangerang Selatan, Banten 15419</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-envelope text-gold-400"></i>
+                            <span>kmsgd.jabodetabek@gmail.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Footer Bottom Bar -->
+            <div class="pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px]">
+                <p class="text-neutral-500">&copy; <span id="current-year"></span> KMSGD Jabodetabek. Seluruh Hak Cipta Dilindungi.</p>
+                <div class="flex gap-4 font-semibold text-neutral-500">
+                    <a href="#" class="hover:text-gold-400 transition">Aturan Organisasi</a>
+                    <span>&bull;</span>
+                    <a href="#" class="hover:text-gold-400 transition">Kebijakan Privasi</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Event Detail Modals -->
+    <div id="detail-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4 transition-all duration-300">
+        <div class="glass-panel max-w-xl w-full rounded-3xl overflow-hidden border border-gold-400/30 shadow-2xl relative flex flex-col justify-between max-h-[90vh]">
+            <!-- Header -->
+            <div class="p-6 border-b border-white/5 flex items-center justify-between">
+                <span class="text-[10px] font-black text-gold-400 uppercase tracking-widest" id="modal-badge">Kategori</span>
+                <button onclick="closeModal()" class="w-8 h-8 rounded-xl glass-card border border-white/10 flex items-center justify-center text-neutral-400 hover:text-white transition-all">
+                    <i class="fas fa-times text-sm"></i>
+                </button>
+            </div>
+            <!-- Body Content -->
+            <div class="p-8 overflow-y-auto" id="modal-body">
+                <h3 class="text-xl font-extrabold text-white mb-4 leading-snug" id="modal-title">Judul Berita</h3>
+                <p class="text-neutral-400 text-xs md:text-sm leading-relaxed" id="modal-desc">Isi penjelasan berita.</p>
+            </div>
+            <!-- Footer -->
+            <div class="p-6 border-t border-white/5 flex justify-end">
+                <a href="https://www.instagram.com/kmsgd_jabodetabek/" target="_blank" class="px-5 py-2.5 bg-gold-400 hover:bg-gold-300 text-dark-700 font-extrabold text-[10px] tracking-widest rounded-xl shadow-lg transition-all uppercase flex items-center gap-2">
+                    Kunjungi Instagram <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Live Toast Notification Container -->
+    <div id="toast-container" class="fixed bottom-6 right-6 z-50 pointer-events-none"></div>
+
+    <!-- Scripts & Core Interactions -->
+    <script>
+        // Preloader Dissolve Logic
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            setTimeout(() => {
+                preloader.classList.add('opacity-0', 'pointer-events-none');
+            }, 600);
+            
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+            
+            // Start Stat Counters on Intersection
+            initializeStatsObserver();
+
+            // Initialize Background Particles
+            initParticleCanvas();
+        });
+
+        // Background Particles System (Subtle Golden Dust)
+        function initParticleCanvas() {
+            const canvas = document.getElementById('particle-canvas');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            let mouseX = 0;
+            let mouseY = 0;
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            // Track mouse movement for subtle gravitational pull
+            window.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 1.5 + 0.3; // Tiny size
+                    this.speedX = Math.random() * 0.15 - 0.075;
+                    this.speedY = Math.random() * -0.3 - 0.05; // Slow drift upward
+                    this.alpha = Math.random() * 0.4 + 0.1;
+                }
+                update() {
+                    // Subtle gravitational drag based on mouse position
+                    if (mouseX > 0 && mouseY > 0) {
+                        const dx = mouseX - this.x;
+                        const dy = mouseY - this.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 180) {
+                            this.x += (dx / dist) * 0.15;
+                            this.y += (dy / dist) * 0.15;
+                        }
+                    }
+
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+
+                    if (this.y < 0) {
+                        this.y = canvas.height;
+                        this.x = Math.random() * canvas.width;
+                    }
+                }
+                draw() {
+                    ctx.save();
+                    ctx.globalAlpha = this.alpha;
+                    ctx.fillStyle = '#d4af37';
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.restore();
+                }
+            }
+
+            // Create appropriate amount of particles
+            const particleCount = Math.min(45, Math.floor(window.innerWidth / 30));
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => {
+                    p.update();
+                    p.draw();
+                });
+                requestAnimationFrame(animate);
+            }
+            animate();
+        }
+
+        // Sticky Navbar shadow on scroll
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', () => {
+            const nav = header.querySelector('nav');
+            if (window.scrollY > 40) {
+                nav.classList.add('py-2.5');
+                nav.classList.remove('py-4');
+                header.classList.add('pt-2');
+                header.classList.remove('pt-4');
+            } else {
+                nav.classList.add('py-4');
+                nav.classList.remove('py-2.5');
+                header.classList.add('pt-4');
+                header.classList.remove('pt-2');
+            }
+        });
+
+        // Mobile drawer toggle
+        const mobileToggle = document.getElementById('mobile-toggle');
+        const mobileDrawer = document.getElementById('mobile-drawer');
+        const menuIcon = document.getElementById('menu-icon');
+
+        mobileToggle.addEventListener('click', () => {
+            if (mobileDrawer.classList.contains('hidden')) {
+                mobileDrawer.classList.remove('hidden');
+                setTimeout(() => {
+                    mobileDrawer.classList.remove('scale-95', 'opacity-0');
+                    mobileDrawer.classList.add('scale-100', 'opacity-100');
+                    menuIcon.className = 'fas fa-times text-lg';
+                }, 50);
+            } else {
+                mobileDrawer.classList.add('scale-95', 'opacity-0');
+                mobileDrawer.classList.remove('scale-100', 'opacity-100');
+                menuIcon.className = 'fas fa-bars text-lg';
+                setTimeout(() => {
+                    mobileDrawer.classList.add('hidden');
+                }, 300);
+            }
+        });
+
+        // Close drawer on link click
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileDrawer.classList.add('scale-95', 'opacity-0');
+                mobileDrawer.classList.remove('scale-100', 'opacity-100');
+                menuIcon.className = 'fas fa-bars text-lg';
+                setTimeout(() => {
+                    mobileDrawer.classList.add('hidden');
+                }, 300);
+            });
+        });
+
+        // Mouse rotation on 3D Emblem
+        const container = document.getElementById('emblem-container');
+        const wrapper = document.getElementById('emblem-wrapper');
+
+        container.addEventListener('mousemove', (e) => {
+            const rect = container.getBoundingClientRect();
+            const x = e.clientX - rect.left - (rect.width / 2);
+            const y = e.clientY - rect.top - (rect.height / 2);
+            
+            const angleX = -y / 15;
+            const angleY = x / 15;
+            
+            wrapper.style.transform = `rotateX(${angleX}deg) rotateY(${angleY}deg) scale(1.03)`;
+            wrapper.style.transition = 'transform 0.15s ease-out';
+        });
+
+        container.addEventListener('mouseleave', () => {
+            wrapper.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
+            wrapper.style.transition = 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
+        });
+
+        // Scroll Reveal Engine Setup
+        const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.05 });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // Regional Tab switcher data mapping
+        const regionsData = {
+            cirebon: {
+                title: 'Cirebon',
+                badge: 'Pusat Adat & Keraton Nusantara',
+                desc: 'Menghadirkan corak spiritual bernilai tinggi warisan Sunan Gunung Djati. Keraton Kasepuhan, seni tari Topeng, batik Megamendung, serta kontribusi basis santri intelektual tangguh dalam barisan perjuangan KMSGD.',
+                icon: 'Sintren & Tarling Klasik',
+                slogan: 'Gemah Ripah Loh Jinawi',
+                img: 'https://images.unsplash.com/photo-1544928147-79a2dbc1f389?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            },
+            indramayu: {
+                title: 'Indramayu',
+                badge: 'Pesisir Maritim & Agraria Tangguh',
+                desc: 'Gerbang utama lumbung pangan Jawa Barat dan pesisir kaya hasil bumi bahari. Melahirkan ketahanan tradisi dengan tari Topeng Kelana, kuliner khas ikan asin, serta jiwa kepemimpinan rakyat pantura yang gigih berdaya.',
+                icon: 'Tari Topeng Kelana & Seni Tarling',
+                slogan: 'Mulih Harja',
+                img: 'https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            },
+            majalengka: {
+                title: 'Majalengka',
+                badge: 'Kedirgantaraan & Pesona Alam Priangan',
+                desc: 'Wilayah pegunungan sejuk eksotik penopang ekonomi udara baru Jawa Barat (BIJB Kertajati). Kader asal Majalengka menyalurkan karakter luhur Parahyangan, nilai kekerabatan erat, serta kecintaan alam lestari.',
+                icon: 'Terasering Panyaweuyan & Seni Sintren',
+                slogan: 'Sindangkasih Sugih Mukti',
+                img: 'https://images.unsplash.com/photo-1593113563332-ce147ce18e96?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            },
+            kuningan: {
+                title: 'Kuningan',
+                badge: 'Penyangga Kaki Ciremai & Sejarah Perundingan',
+                desc: 'Tanah asri bersejarah tempat ditandatanganinya Perundingan Linggarjati. Menjadi produsen pemikir andal dan akademisi kritis, berpegang teguh pada prinsip kesetiaan rakyat, harmonisasi alam, dan gotong royong.',
+                icon: 'Gedung Linggarjati & Taman Nasional Ciremai',
+                slogan: 'Rapak Geunta',
+                img: 'https://images.unsplash.com/photo-1544531586-fde5298cda41?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            }
+        };
+
+        function switchRegion(key) {
+            document.querySelectorAll('.region-tab').forEach(tab => {
+                tab.className = 'region-tab p-4 rounded-xl font-bold tracking-wider text-xs transition duration-300 flex flex-col items-center gap-2 border bg-white/5 text-neutral-300 border-white/5 hover:border-gold-400/30';
+            });
+            
+            const activeTab = document.getElementById(`tab-${key}`);
+            activeTab.className = 'region-tab active p-4 rounded-xl font-bold tracking-wider text-xs transition duration-300 flex flex-col items-center gap-2 border bg-gold-400 text-dark-700 border-gold-400 shadow-lg';
+            
+            const container = document.getElementById('region-card-container');
+            container.classList.add('scale-98', 'opacity-0');
+            
+            setTimeout(() => {
+                const data = regionsData[key];
+                const content = document.getElementById('region-content');
+                
+                content.innerHTML = `
+                    <div class="space-y-6 animate-[fadeIn_0.5s_ease-out]">
+                        <div class="inline-block px-3 py-1 bg-gold-400/10 border border-gold-400/30 rounded-full text-gold-400 text-[10px] font-bold uppercase tracking-wider">
+                            ${data.badge}
+                        </div>
+                        <h3 class="text-2xl md:text-3xl font-extrabold text-white">${data.title}</h3>
+                        <p class="text-neutral-400 leading-relaxed text-xs md:text-sm">
+                            ${data.desc}
+                        </p>
+                        <div class="flex gap-6 pt-2">
+                            <div>
+                                <h4 class="text-[10px] text-neutral-500 uppercase font-extrabold tracking-widest">Khas Budaya</h4>
+                                <p class="text-white text-xs font-semibold mt-1">${data.icon}</p>
+                            </div>
+                            <div>
+                                <h4 class="text-[10px] text-neutral-500 uppercase font-extrabold tracking-widest">Semboyan</h4>
+                                <p class="text-white text-xs font-semibold mt-1">${data.slogan}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative overflow-hidden rounded-2xl aspect-[4/3] border border-white/10 shadow-lg animate-[fadeIn_0.5s_ease-out]">
+                        <img src="${data.img}" alt="${data.title}" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
+                    </div>
+                `;
+                
+                container.classList.remove('scale-98', 'opacity-0');
+            }, 250);
+        }
+
+        // Stats Counters Animation
+        function initializeStatsObserver() {
+            const stats = {
+                'stat-year': { end: 1964, prefix: '' },
+                'stat-region': { end: 4, prefix: '' },
+                'stat-members': { end: 120, prefix: '+' },
+                'stat-campus': { end: 20, prefix: '+' }
+            };
+
+            const statsSection = document.getElementById('stat-year').parentElement.parentElement;
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        Object.keys(stats).forEach(id => {
+                            animateNumber(id, stats[id].end, stats[id].prefix);
+                        });
+                        observer.unobserve(statsSection);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            observer.observe(statsSection);
+        }
+
+        function animateNumber(id, end, prefix) {
+            const el = document.getElementById(id);
+            let start = 0;
+            const duration = 1200;
+            const stepTime = Math.abs(Math.floor(duration / end));
+            const increment = end > 1000 ? 30 : end > 100 ? 4 : 1;
+
+            const timer = setInterval(() => {
+                start += increment;
+                if (start >= end) {
+                    el.textContent = end + prefix;
+                    clearInterval(timer);
+                } else {
+                    el.textContent = start + prefix;
+                }
+            }, stepTime);
+        }
+
+        // Real Activity Data Details
+        const modalData = {
+            peta: {
+                title: "Pekan Ta'aruf (PETA) KMSGD Jabodetabek",
+                badge: "KADERISASI UTAMA",
+                desc: "Merupakan gerbang sambutan perdana bagi para mahasiswa baru asal Ciayumajakuning yang menuntut ilmu di Jabodetabek. Melalui PETA, mahasiswa dibekali nilai kepemimpinan luhur Sunan Gunung Djati, diperkenalkan dengan sesepuh paguyuban, serta menyatukan frekuensi persaudaraan agar kokoh menghadapi tantangan perkuliahan di perantauan."
+            },
+            festival: {
+                title: "Milad & Festival Budaya Nusantara",
+                badge: "PROGRAM KULTURAL",
+                desc: "Agenda tahunan bersejarah yang bertujuan melestarikan seni pusaka asal daerah. Kegiatan ini secara rutin menghadirkan pertunjukan seni tari sintren, pameran batik Cirebonan, hingga orasi kebudayaan nasional yang didukung penuh oleh para tokoh adat, alumni nasional, dan dilaksanakan di panggung budaya Anjungan Jawa Barat TMII."
+            },
+            mengabdi: {
+                title: "Bakti Sosial KMSGD Jabodetabek & BKPRMI",
+                badge: "PENGABDIAN MASYARAKAT",
+                desc: "Realisasi nyata pengabdian sosial oleh kader KMSGD Jabodetabek berkolaborasi dengan BKPRMI Kabupaten Cirebon. Kegiatan ini meliputi penanaman bibit pohon jambu bersama sepanjang musim penghujan di Desa Matangaji, Kabupaten Cirebon guna mendukung kelestarian alam dan pengembangan rintisan desa wisata pedesaan."
+            }
+        };
+
+        function openModal(key) {
+            const data = modalData[key];
+            document.getElementById('modal-title').textContent = data.title;
+            document.getElementById('modal-badge').textContent = data.badge;
+            document.getElementById('modal-desc').textContent = data.desc;
+            
+            const modal = document.getElementById('detail-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('detail-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = '';
+        }
+
+        // Live Toast notification helper
+        function showToast(message) {
+            const toastContainer = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'glass-panel px-5 py-3 rounded-xl border border-gold-400 shadow-2xl text-xs font-semibold text-white flex items-center gap-3 transition-all duration-300 translate-y-3 opacity-0 mt-3 pointer-events-auto';
+            toast.innerHTML = `<i class="fas fa-check-circle text-gold-400 text-base"></i> <span>${message}</span>`;
+            
+            toastContainer.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.remove('translate-y-3', 'opacity-0');
+            }, 50);
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-3', 'opacity-0');
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            }, 3000);
+        }
+
+        // Submit Aspiration handler
+        function handlePostAspiration(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('asp-name').value.trim();
+            const origin = document.getElementById('asp-origin').value;
+            const text = document.getElementById('asp-text').value.trim();
+            
+            if(!name || !text) return;
+
+            const wall = document.getElementById('aspiration-wall-container');
+            const sticker = document.createElement('div');
+            sticker.className = 'glass-panel p-5 rounded-2xl border-l-4 border-l-gold-400 border-gold-400/30 flex flex-col justify-between scale-95 opacity-0 transition-all duration-500';
+            sticker.innerHTML = `
+                <p class="text-neutral-300 text-xs leading-relaxed italic">"${text}"</p>
+                <div class="mt-4 pt-2.5 border-t border-white/5 flex items-center justify-between text-[10px]">
+                    <span class="font-extrabold text-white">${name}</span>
+                    <span class="text-gold-400 font-bold uppercase">${origin}</span>
+                </div>
+            `;
+
+            wall.insertBefore(sticker, wall.firstChild);
+            
+            setTimeout(() => {
+                sticker.classList.remove('scale-95', 'opacity-0');
+                sticker.classList.add('scale-100', 'opacity-100');
+            }, 50);
+
+            // Reset inputs
+            document.getElementById('asp-name').value = '';
+            document.getElementById('asp-text').value = '';
+            
+            showToast('Aspirasi Anda berhasil terpasang di dinding!');
+        }
+    </script>
+</body>
+</html>
